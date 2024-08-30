@@ -1,0 +1,15 @@
+1. If want to add new backbone to YoloV8,   Add to nn/modules/covn.py and nn/modules/block.py
+2. Include the all added stuff to  nn/task.py (For both covn.py and block.py)		
+( ---> As an example, refer to how the ultralytics\ultralytics\cfg\models\v8\yolov8-ghost is implemented (In official YoloV8 model.))
+3. Include the new model structure into cfg/models/v8/new_model.yaml
+4. In cfg/default.yaml, point model --> to the the new model  (model: new_model.yaml, if train new model from without pretrained, set pretrained: False.)
+
+For 1 and 2, remember to include the new block in __all__ and import the new conv block from covn.py to block.py
+
+(Have to do the above for all, even if just running the model.)
+
+
+Training of a new self defined model:
+
+model = YOLO("new_model.yaml").load("yolov8n.pt")  # build from YAML and transfer learning from pretrained.
+model = YOLO("new_model.yaml") 				   # Train a brand new model.
